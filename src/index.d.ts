@@ -10,6 +10,6 @@ export interface Config {
 }
 export declare function streamable<T>(
     config: Config,
-    callback?: (data: unknown, set?: (value: T) => void) => Unsubscriber | void,
-    initialValue?: T
+    callback?: (data: T, set?: (value: T) => void) => Unsubscriber | T | void,
+    defaultValue?: T
 ): Readable<T>;

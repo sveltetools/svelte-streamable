@@ -1,22 +1,25 @@
 import { readable } from 'svelte/store';
 
-export function streamable({ url, event, format = 'json', ...options }, callback, initialValue) {
+export function streamable({ url, event, format = 'json', ...options }, callback, defaultValue) {
 	const auto = !callback || callback.length < 2;
 
-	return readable(initialValue, (set) => {
+	return readable(defaultValue, (set) => {
 		let cleanup = noop;
 		let result;
 
 		function update(e) {
 			cleanup();
 
+			let data;
+
 			if (e) {
-				const data = format === 'json' ? JSON.parse(e.data) : e.data;
-				result = callback ? callback(data, set) : data;
+				data = format === 'json' ? JSON.parse(e.data) : e.data;
 			}
 
+			result = callback ? callback(data, set) : data;
+
 			if (auto) {
-				set(result);
+				set(typeof result !== 'undefined' ? result : defaultValue);
 			} else {
 				cleanup = typeof result === 'function' ? result : noop;
 			}
@@ -28,13 +31,8 @@ export function streamable({ url, event, format = 'json', ...options }, callback
 			}
 		}
 
-		function open(e) {
-			console.log('streamable open', e);
-		}
-
 		const es = new EventSource(url, options);
 
-		es.addEventListener('open', open);
 		es.addEventListener('error', error);
 
 		if (event) {
@@ -46,7 +44,6 @@ export function streamable({ url, event, format = 'json', ...options }, callback
 		update();
 
 		return () => {
-			es.removeEventListener('open', open);
 			es.removeEventListener('error', error);
 			es.removeEventListener('message', update);
 			es.removeEventListener(event, update);

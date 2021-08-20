@@ -37,16 +37,17 @@ const updates = streamable({
 });
 ```
 
-### Store for specific server event:
+### Store for specific server event and allow credentials if needed:
 
-Just provide event name as `event` property in config object.
+Just provide event name as `event` and `withCredentials` properties in config object.
 
 ```javascript
 import { streamable } from 'svelte-streamable';
 
 const posts = streamable({
   url: 'http://xxx.xxx.xxx:xxx/updates',
-  event: 'posts'
+  event: 'posts',
+  withCredentials: true,
 });
 ```
 
