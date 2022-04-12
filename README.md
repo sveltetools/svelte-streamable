@@ -32,7 +32,7 @@ Just provide Server-sent event endpoint as `url` property in config object.
 ```javascript
 import { streamable } from 'svelte-streamable';
 
-const updates = streamable({
+const updatesAsync = streamable({
   url: 'http://xxx.xxx.xxx:xxx/updates'
 });
 ```
@@ -44,7 +44,7 @@ Just provide event name as `event` and `withCredentials` properties in config ob
 ```javascript
 import { streamable } from 'svelte-streamable';
 
-const posts = streamable({
+const postsAsync = streamable({
   url: 'http://xxx.xxx.xxx:xxx/updates',
   event: 'posts',
   withCredentials: true,
@@ -58,7 +58,7 @@ Just provide callback handler as second argument of `streamable` constructor and
 ```javascript
 import { streamable } from 'svelte-streamable';
 
-const posts = streamable({
+const postsAsync = streamable({
   url: 'http://xxx.xxx.xxx:xxx/updates',
   event: 'posts'
 }, ($posts) => {
@@ -73,7 +73,7 @@ This sematic formly looks like Svelte's [derived](https://svelte.dev/docs#derive
 ```javascript
 import { streamable } from 'svelte-streamable';
 
-const posts = streamable({
+const postsAsync = streamable({
   url: 'http://xxx.xxx.xxx:xxx/updates',
   event: 'posts'
 }, ($posts, set) => {
@@ -95,13 +95,26 @@ const posts = streamable({
 ```javascript
 import { streamable } from 'svelte-streamable';
 
-const csv = streamable({
+const csvAsync = streamable({
   url: 'http://xxx.xxx.xxx:xxx/updates',
   event: 'csv',
   format: 'raw',
 }, ($csv) => {
   return CSVToArray($csv);
 });
+```
+
+### Using with `svelte-asyncable`
+
+Streamable store contains a Promise to control async statuses (pending, fullfilled, rejected). To use the data in synchronous-way, you can use `syncable` store from  [svelte-asyncable](https://www.npmjs.com/package/svelte-asyncable) package:
+
+
+```javascript
+import { streamable } from 'svelte-streamable';
+import { syncable } from 'svelte-asyncable';
+
+const postsAsync = streamable(...); // contains Promise
+const posts = syncable(postsAsync, []); // contains value
 ```
 
 ## License

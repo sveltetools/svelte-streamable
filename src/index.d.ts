@@ -12,4 +12,4 @@ export declare function streamable<T>(
     config: Config,
     callback?: (data: T, set?: (value: T) => void) => Unsubscriber | T | void,
     defaultValue?: T
-): Readable<T>;
+): Readable<Promise<T>>;
