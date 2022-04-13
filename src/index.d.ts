@@ -12,8 +12,8 @@ export interface Config {
 export declare function streamable<T, U = void>(
     config: Config,
     callback?: (
-        data: T,
-        set?: (value: U | T) => void
+        data: T | void,
+        set: (value: U | T) => void
     ) => Unsubscriber | U | T | void,
     defaultValue?: T
 ): Readable<Promise<U | T>>;
