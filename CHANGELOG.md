@@ -1,5 +1,12 @@
 # svelte-streamable changelog
 
+## 2.1.1
+* Improved types.
+
+## 2.1.0
+* Support `base64` and `urlencoded` formats of payload.
+* Improved types.
+
 ## 2.0.0
 
 * (breaking change): now `streamable` store is always contain `Promise` to control different async statuses.

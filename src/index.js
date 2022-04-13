@@ -20,8 +20,16 @@ export function streamable(
 
 			let data;
 
-			if (e) {
-				data = format === 'json' ? JSON.parse(e.data) : e.data;
+			if (e && e.data) {
+				if (format === 'json') {
+					data = JSON.parse(e.data);
+				} else if (format === 'base64') {
+					data = atob(e.data);
+				} else if (format === 'urlencoded') {
+					data = Object.fromEntries(new URLSearchParams(e.data));
+				} else {
+					data = e.data;
+				}
 			}
 
 			result = callback ? callback(data, resolve) : data;
