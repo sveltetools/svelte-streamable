@@ -9,7 +9,6 @@ export function streamable(
 	const initial = defaultValue ? Promise.resolve(defaultValue) : new Promise(noop);
 	return readable(initial, (set) => {
 		let cleanup = noop;
-		let result;
 
 		function resolve(value) {
 			set(typeof value !== 'undefined' ? Promise.resolve(value) : initial);
@@ -32,7 +31,7 @@ export function streamable(
 				}
 			}
 
-			result = callback ? callback(data, resolve) : data;
+			const result = callback ? callback(data, resolve) : data;
 
 			if (auto) {
 				resolve(result);
