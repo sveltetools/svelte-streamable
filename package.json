@@ -1,6 +1,6 @@
 {
     "name": "svelte-streamable",
-    "version": "2.1.2",
+    "version": "2.2.0",
     "description": "Super tiny, simple to use SvelteJS store for real-time updates from server via SSE.",
     "main": "dist/index.js",
     "module": "dist/index.mjs",

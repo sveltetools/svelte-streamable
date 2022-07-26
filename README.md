@@ -84,8 +84,9 @@ const postsAsync = streamable({
 	  set($posts);
 	}, 1000);
 
-	return () => {
+	return (lastSubscriber) => {
 		// cleanup logic
+    console.log(lastSubscriber ?  'no more subscribers' : 'new update cleanup');
 	};
 });
 ```

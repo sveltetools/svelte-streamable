@@ -1,5 +1,8 @@
 # svelte-streamable changelog
 
+## 2.2.0
+* Add an argument to `cleanup` function to detect `lastSubscriber` case.
+
 ## 2.1.2
 * Improved types.
 

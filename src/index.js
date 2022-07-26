@@ -15,7 +15,7 @@ export function streamable(
 		}
 
 		function update(e) {
-			cleanup();
+			cleanup(false);
 
 			let data;
 
@@ -55,7 +55,7 @@ export function streamable(
 			es.removeEventListener('error', error);
 			es.removeEventListener(event, update);
 			es.close();
-			cleanup();
+			cleanup(true);
 		};
 	});
 }
