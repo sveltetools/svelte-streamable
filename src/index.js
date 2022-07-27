@@ -46,7 +46,9 @@ export function streamable(
 			set(Promise.reject(e));
 		}
 
-		const keypath = Object.entries(options).sort().reduce((k, [_, v]) => `${k}/${v}`, url);
+		const keypath = Object.entries(options)
+			.sort()
+			.reduce((k, [, v]) => `${k}/${v}`, url);
 
 		let es = esx[keypath];
 
