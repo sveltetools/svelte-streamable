@@ -1,5 +1,9 @@
 # svelte-streamable changelog
 
+## 2.3.0
+* Opitimize number of SSE connections.
+* Improve docs.
+
 ## 2.2.0
 * Add an argument to `cleanup` function to detect `lastSubscriber` case.
 

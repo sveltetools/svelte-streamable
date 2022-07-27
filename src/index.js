@@ -1,5 +1,7 @@
 import { readable } from 'svelte/store';
 
+const esx = {};
+
 export function streamable(
 	{ url, event = 'message', format = 'json', ...options },
 	callback,
@@ -44,17 +46,32 @@ export function streamable(
 			set(Promise.reject(e));
 		}
 
-		const es = new EventSource(url, options);
+		const keypath = Object.entries(options).sort().reduce((k, [_, v]) => `${k}/${v}`, url);
+
+		let es = esx[keypath];
+
+		if (!es) {
+			es = new EventSource(url, options);
+			es.subscribers = 0;
+			esx[keypath] = es;
+		}
 
 		es.addEventListener('error', error);
 		es.addEventListener(event, update);
 
 		callback && setTimeout(update);
 
+		es.subscribers++;
+
 		return () => {
 			es.removeEventListener('error', error);
 			es.removeEventListener(event, update);
-			es.close();
+
+			if (!--es.subscribers) {
+				es.close();
+				delete esx[keypath];
+			}
+
 			cleanup(true);
 		};
 	});

@@ -91,6 +91,19 @@ const postsAsync = streamable({
 });
 ```
 
+### Supporting several formats of the data:
+
+Use `format` option with one of the folowing value: `json` (default), `base64`, `urlencoded` or `raw`.
+
+```javascript
+import { streamable } from 'svelte-streamable';
+
+const csvAsync = streamable({
+  url: 'http://xxx.xxx.xxx:xxx/updates',
+  format: 'urlencoded',
+});
+```
+
 ### Get value in `raw` format instead of `json` (default) with custom preprocessing:
 
 ```javascript
